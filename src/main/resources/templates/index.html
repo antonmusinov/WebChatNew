@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>WebChat</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+    <header>
+        <div id="container">
+            <h3>Input login</h3>
+            <form id="nameForm" class="login" method="POST" action="javascript:void(null);" onsubmit="login()">
+                <input id="name" name="name" class="name" value="" type="text" placeholder="Username">
+                <button type="submit" class="btn btn--primary btn--inside uppercase">Input</button>
+            </form>
+        </div>
+    </header>
+    <aside >
+        <div id="users">
+        </div>
+    </aside>
+    <main>
+        <div id="chat-page" class="hidden">
+            <div class="chat-container">
+                <div id="msgArea">
+                <!--<ul id="messageArea">
+                    <li>TODO</li>
+                </ul>-->
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div id="footer-msg">
+            <form id="messageForm" method="POST" action="javascript:void(null)" onsubmit="say()">
+                <input id="message" name="message" class="message" value="" type="text" placeholder="Your message">
+                <button type="submit" class="btn-msg">Send</button>
+            </form>
+            <form id="logout" method="POST" action="javascript:void(null)" onsubmit="logout()">
+                <button type="submit">EXIT</button><!--CSS TODO-->
+            </form>
+        </div>
+    </footer>
+
+    <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

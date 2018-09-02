@@ -1,7 +1,6 @@
 package web.app.chat.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.joda.time.LocalTime;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,9 +15,9 @@ import java.util.stream.Collectors;
 @RequestMapping("chat")
 public class MainController {
 
-    private static final Logger log = LoggerFactory.getLogger(MainController.class);
-
     private static final String USER_SAYS = " says :";
+
+    private static final String TIME_MESSAGE = " time : ";
 
     private  List<String> logins = new ArrayList<>();
     private Queue<String> messages = new ConcurrentLinkedQueue<>();
@@ -42,13 +41,14 @@ public class MainController {
                     method = RequestMethod.POST,
                     consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity<String> say(@RequestParam(required=false, name = "message") final String message,
-                                      @RequestParam("name") final String name) {
+                                      @RequestParam("name") final String name,
+                                      final LocalTime localTime) {
 
         if (message.length() < 1) {
             return ResponseEntity.badRequest().body("Input msg pls");
         }
 
-        messages.add(name + USER_SAYS +  message);
+        messages.add(name + USER_SAYS  +  message +"\n" + TIME_MESSAGE + localTime.toString());
 
         return ResponseEntity.ok().build();
     }
@@ -76,17 +76,11 @@ public class MainController {
     @RequestMapping(path = "logout",
                     method = RequestMethod.POST,
                     consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ResponseEntity<String> logout(@RequestParam("name") String name) {
+    public ResponseEntity<String> logout(@RequestParam("name") final String name) {
 
         logins.remove(name);
         messages.add("User Disconnected : " + name);
 
         return ResponseEntity.ok().build();
     }
-
-
-
-
-
-
 }

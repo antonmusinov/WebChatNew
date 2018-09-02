@@ -23,7 +23,7 @@ function loadHistory() {
     };
 
     $.ajax(setting).done(function (response) {
-        $("#msgArea").html(response.replace(/\n/g, "<br />"))
+        $("#msgArea").html(response.replace(/\n/g, "<br />", "<hr />"))
         $("#msgArea").scrollTop($("#msgArea")[0].scrollHeight);
     }).fail(function (jqXHR, textStatus) {
         console.log(jqXHR.status + " " + jqXHR.statusText + ". " + jqXHR.responseText);

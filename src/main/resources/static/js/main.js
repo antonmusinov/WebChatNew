@@ -53,13 +53,12 @@ function say() {
 function logout() {
     var name = $('#nameForm').serialize();
 
-    var setting = {
-        "method" : "POST",
-        "crossDomain" : true,
-        "url" : "http://localhost:8080/chat/logout",
-        "data" : name
-    };
-
+        var setting = {
+            "method": "POST",
+            "crossDomain": true,
+            "url": "http://localhost:8080/chat/logout",
+            "data": name
+        };
     $.ajax(setting).done(function (response) {
         loadHistory();
         online();
@@ -72,12 +71,12 @@ function login() {
 
     var name = $('#nameForm').serialize();
 
-    var setting = {
-        "method" : "POST",
-        "crossDomain" : true,
-        "url" : "http://localhost:8080/chat/login",
-        "data" : name
-    };
+        var setting = {
+            "method": "POST",
+            "crossDomain": true,
+            "url": "http://localhost:8080/chat/login",
+            "data": name
+        };
 
     $.ajax(setting).done(function (response) {
         loadHistory();

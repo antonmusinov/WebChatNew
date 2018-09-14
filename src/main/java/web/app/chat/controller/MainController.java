@@ -1,6 +1,8 @@
 package web.app.chat.controller;
 
 import org.joda.time.LocalTime;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -73,11 +75,12 @@ public class MainController {
         String link = "http";
 
         if (message.trim().startsWith(link)) {
-            messages.add(msgTime + " " + userName + "<a href=\"" + message + "\">" + message + "</a>");
+            String unsafe = "<a href=\"" + message + "\">" + message + "</a>";
+            messages.add(msgTime + " " + userName + protectedMessage(unsafe));
             log.info(String.valueOf(messages));
             return ResponseEntity.ok().build();
         } else {
-            messages.add(msgTime + " " + userName + message);
+            messages.add(msgTime + " " + userName + protectedMessage(message));
             return ResponseEntity.ok().build();
         }
     }
@@ -113,4 +116,7 @@ public class MainController {
         return ResponseEntity.ok().build();
     }
 
+    private String protectedMessage(final String msg) {
+        return Jsoup.clean(msg, Whitelist.basic());
+    }
 }

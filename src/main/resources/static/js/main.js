@@ -28,7 +28,6 @@ function loadHistory() {
     }).fail(function (jqXHR, textStatus) {
         console.log(jqXHR.status + " " + jqXHR.statusText + ". " + jqXHR.responseText);
     });
-
 }
 
 function say() {

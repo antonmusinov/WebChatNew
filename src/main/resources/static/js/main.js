@@ -1,8 +1,11 @@
+var host = "http://localhost:";
+var port = 8080;
+//var hostHeroku = "https://webchat-heroku.herokuapp.com";
 
 function online() {
     var setting = {
         "crossDomain" : true,
-        "url" : "http://localhost:8080/chat/online",
+        "url" : host + port + "/chat/online",
         "method" : "GET"
     };
 
@@ -15,10 +18,9 @@ function online() {
 }
 
 function loadHistory() {
-
     var setting = {
         "crossDomain" : true,
-        "url" : "http://localhost:8080/chat/chat",
+        "url" : host + port + "/chat/chat",
         "method" : "GET"
     };
 
@@ -37,15 +39,23 @@ function say() {
     var setting = {
         "method" : "POST",
         "crossDomain" : true,
-        "url" : "http://localhost:8080/chat/say",
+        "url" : host + port + "/chat/say",
         "data" : name + "&" + msg
     };
 
+    clearFormMsg();
     $.ajax(setting).done(function (response) {
         loadHistory();
         online();
     }).fail(function (jqXHR, textStatus) {
         console.log(jqXHR.status + " " + jqXHR.statusText + ". " + jqXHR.responseText);
+    });
+}
+
+function clearFormMsg() {
+    $('#messageForm').submit(function () {
+        var form = this;
+        form.reset();
     });
 }
 
@@ -55,7 +65,7 @@ function logout() {
         var setting = {
             "method": "POST",
             "crossDomain": true,
-            "url": "http://localhost:8080/chat/logout",
+            "url":  host + port + "/chat/logout",
             "data": name
         };
     $.ajax(setting).done(function (response) {
@@ -73,7 +83,7 @@ function login() {
         var setting = {
             "method": "POST",
             "crossDomain": true,
-            "url": "http://localhost:8080/chat/login",
+            "url":  host + port + "/chat/login",
             "data": name
         };
 
@@ -85,6 +95,7 @@ function login() {
     });
 }
 
+clearFormMsg();
 loadHistory();
 online();
 setInterval(loadHistory, 10000);

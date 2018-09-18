@@ -14,10 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Queue;
+import static web.app.chat.controller.ConstController.*;
+
+import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
 
@@ -27,18 +26,12 @@ public class MainController {
 
     private static final Logger log = LoggerFactory.getLogger(MainController.class);
 
-    private static final String USER_SAYS = " says : ";
+    private int antiSpamCount = 0;
 
-    private static final String TIME_MESSAGE = " time : ";
+    private String lastMessage = "";
 
-    private static final String COLOR_FONT_BLUE = "<font style=\"color: blue;\">";
-
-    private static final String COLOR_FONT_GREEN = "<font style=\"color: green;\">";
-
-    private static final String FONT_CLOSE_TAG = "</font>";
-
-    private List<String> usernames = new ArrayList<>();
-    private Queue<String> messages = new ConcurrentLinkedQueue<>();
+    private static List<String> usernames = new ArrayList<>();
+    private static Queue<String> messages = new ConcurrentLinkedQueue<>();
 
     @RequestMapping(path = "login",
                     method = RequestMethod.POST,
@@ -72,9 +65,12 @@ public class MainController {
 
         String msgTime = TIME_MESSAGE + COLOR_FONT_GREEN + localTime.toString("HH:mm:ss") + FONT_CLOSE_TAG;
 
-        String link = "http";
+        if (antiSpam(message, name)){
+            log.info(name + "is spamming");
+            logout(name);
+        }
 
-        if (message.trim().startsWith(link)) {
+        if (message.trim().startsWith(LINK)) {
             String unsafe = "<a href=\"" + message + "\">" + message + "</a>";
             messages.add(msgTime + " " + userName + protectedMessage(unsafe));
             log.info(String.valueOf(messages));
@@ -86,8 +82,8 @@ public class MainController {
     }
 
     @RequestMapping(path = "chat",
-                    method = RequestMethod.GET,
-                    produces = MediaType.TEXT_PLAIN_VALUE)
+            method = RequestMethod.GET,
+            produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> chat(){
         return new ResponseEntity<>(messages.stream()
                 .map(Objects::toString)
@@ -96,13 +92,13 @@ public class MainController {
     }
 
     @RequestMapping(path = "online",
-                    method = RequestMethod.GET,
-                    produces = MediaType.TEXT_PLAIN_VALUE)
+            method = RequestMethod.GET,
+            produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> online(){
         return new ResponseEntity<>(usernames.stream()
-                                    .map(Objects::toString)
-                                    .collect(Collectors.joining( "\n" )),
-                                    HttpStatus.OK);
+                .map(Objects::toString)
+                .collect(Collectors.joining( "\n" )),
+                HttpStatus.OK);
     }
 
     @RequestMapping(path = "logout",
@@ -119,4 +115,23 @@ public class MainController {
     private String protectedMessage(final String msg) {
         return Jsoup.clean(msg, Whitelist.basic());
     }
+
+    private boolean antiSpam(final String msg, final String name) {
+
+        if (msg.equals(lastMessage)) {
+            antiSpamCount++;
+        } else {
+            lastMessage = msg;
+            antiSpamCount = 0;
+        }
+
+        if (antiSpamCount >= 3) {
+            log.info("User " + name + " is spamming");
+            antiSpamCount = 0;
+            lastMessage = "";
+            return true;
+        }
+        return false;
+    }
+
 }

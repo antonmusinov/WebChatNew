@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
 import web.app.chat.controller.MainController;
 
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.HttpStatus.OK;
 
@@ -15,8 +16,9 @@ import static org.springframework.http.HttpStatus.OK;
 @SpringBootTest
 public class MainApplicationTest {
 
-    @Autowired
+@Autowired
     private MainController mainController;
+
 
     @Test
     public void loadController(){
@@ -26,14 +28,15 @@ public class MainApplicationTest {
     @Test
     public void loginTestStatusAndResponse() {
 
-        int loginStatus = mainController.login("test").getStatusCodeValue();
-        HttpStatus loginResponse = mainController.login("test").getStatusCode();
+        int loginStatus = mainController.login("test", "password").getStatusCodeValue();
+        HttpStatus loginResponse = mainController.login("test", "password").getStatusCode();
 
         assertThat(loginStatus).isEqualTo(200);
         assertThat(loginResponse).isEqualByComparingTo(OK);
     }
 
-    /* TODO */
+/* TODO */
+
 
 }
 

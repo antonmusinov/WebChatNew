@@ -2,10 +2,10 @@ var host = "http://localhost:";
 var port = 8080;
 //var hostHeroku = "https://webchat-heroku.herokuapp.com";
 
-function online() {
+/*function online() {
     var setting = {
         "crossDomain" : true,
-        "url" : host + port + "/chat/online",
+        "url" : host + port + "/online",
         "method" : "GET"
     };
 
@@ -15,12 +15,12 @@ function online() {
     }).fail(function (jqXHR, textStatus) {
         console.log(jqXHR.status + " " + jqXHR.statusText + ". " + jqXHR.responseText);
     });
-}
+}*/
 
-function loadHistory() {
+/*function loadHistory() {
     var setting = {
         "crossDomain" : true,
-        "url" : host + port + "/chat/chat",
+        "url" : host + port + "/allMessages",
         "method" : "GET"
     };
 
@@ -30,16 +30,16 @@ function loadHistory() {
     }).fail(function (jqXHR, textStatus) {
         console.log(jqXHR.status + " " + jqXHR.statusText + ". " + jqXHR.responseText);
     });
-}
+}*/
 
-function say() {
+/*function say() {
     var msg = $('#messageForm').serialize();
     var name = $('#nameForm').serialize();
 
     var setting = {
         "method" : "POST",
         "crossDomain" : true,
-        "url" : host + port + "/chat/say",
+        "url" : host + port + "/say",
         "data" : name + "&" + msg
     };
 
@@ -50,40 +50,23 @@ function say() {
     }).fail(function (jqXHR, textStatus) {
         console.log(jqXHR.status + " " + jqXHR.statusText + ". " + jqXHR.responseText);
     });
-}
-
+}*/
+/*
 function clearFormMsg() {
     $('#messageForm').submit(function () {
         var form = this;
         form.reset();
     });
-}
+}*/
 
-function logout() {
-    var name = $('#nameForm').serialize();
-
-        var setting = {
-            "method": "POST",
-            "crossDomain": true,
-            "url":  host + port + "/chat/logout",
-            "data": name
-        };
-    $.ajax(setting).done(function (response) {
-        loadHistory();
-        online();
-    }).fail(function (jqXHR, textStatus) {
-        console.log(jqXHR.status + " " + jqXHR.statusText + ". " + jqXHR.responseText);
-    });
-}
-
-function login() {
+/*function login() {
 
     var name = $('#nameForm').serialize();
 
         var setting = {
             "method": "POST",
             "crossDomain": true,
-            "url":  host + port + "/chat/login",
+            "url":  host + port + "/login",
             "data": name
         };
 
@@ -93,7 +76,7 @@ function login() {
     }).fail(function (jqXHR, textStatus) {
         console.log(jqXHR.status + " " + jqXHR.statusText + ". " + jqXHR.responseText);
     });
-}
+}*/
 
 clearFormMsg();
 loadHistory();

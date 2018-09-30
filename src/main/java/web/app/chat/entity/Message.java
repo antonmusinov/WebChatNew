@@ -7,30 +7,31 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 
-
-
 @Entity
 @Table(name = "message")
 @Getter
 @Setter
 @Accessors(chain = true)
-@ToString(of = {"name", "message", "time"})
+@ToString(of = {"username", "message", "time"})
 public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private long id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_name")
-    private User name;
+    private User username;
 
-    @Column(name = "message")
     private String message;
 
-    @Column(name = "time")
     private String time;
 
+    public Message(){}
+
+    public Message(String message, User user) {
+        this.username = user;
+        this.message = message;
+    }
 
 }

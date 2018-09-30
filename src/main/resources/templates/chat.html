@@ -8,11 +8,7 @@
 <body>
     <header>
         <div id="container">
-            <h3>Input login</h3>
-            <form id="nameForm" class="login" method="POST" action="javascript:void(null);" onsubmit="login()">
-                <input id="name" name="name" class="name" value="" type="text" placeholder="Username">
-                <button type="submit" class="btn btn--primary btn--inside uppercase">Input</button>
-            </form>
+            <h1>WELCOME USER</h1>
         </div>
     </header>
         <aside >
@@ -24,21 +20,24 @@
             <div id="chat-page" class="hidden">
                 <div class="chat-container">
                     <div id="msgArea">
-                        <!--<ul id="messageArea">
-                            <li id="msg">TODO</li>
-                        </ul>-->
+                        <table>
+                            <tr th:each="m : ${messages}">
+                                <td th:utext="${m.username}"></td>
+                                <td th:utext="${m.message}"></td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>
         </main>
         <footer>
             <div id="footer-msg">
-                <form id="messageForm" method="POST" action="javascript:void(null)" onsubmit="say()">
-                    <input id="message" name="message" class="message" value="" type="text" placeholder="Your message">
+                <form id="messageForm" method="POST" th:action="@{say}"> <!--action="javascript:void(null)" onsubmit="say()"-->
+                    <input id="message" name="message" class="message" value="" type="text" placeholder="Your message" />
                     <button type="submit" class="btn-msg">Send</button>
                 </form>
-                <form id="logout" method="POST" action="javascript:void(null)" onsubmit="logout()">
-                    <button type="submit">EXIT</button><!--CSS TODO-->
+                <form th:action="@{/logout}" method="post">
+                    <input type="submit" value="Sign Out"/>
                 </form>
             </div>
         </footer>

@@ -2,8 +2,8 @@ package web.app.chat.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.Accessors;
+import org.joda.time.LocalTime;
 
 import javax.persistence.*;
 
@@ -12,7 +12,6 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Accessors(chain = true)
-@ToString(of = {"username", "message", "time"})
 public class Message {
 
     @Id
@@ -34,4 +33,11 @@ public class Message {
         this.message = message;
     }
 
+    @Override
+    public String toString() {
+
+        LocalTime localTime = new LocalTime();
+
+        return username + message + '\'' + " time='" + localTime.toString("hh:mm:ss");
+    }
 }

@@ -78,8 +78,9 @@ function clearFormMsg() {
     });
 }*/
 
-clearFormMsg();
+/*
+//clearFormMsg();
 loadHistory();
-online();
+//online();
 setInterval(loadHistory, 10000);
-setInterval(online, 10000);
+setInterval(online, 10000);*/

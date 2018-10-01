@@ -1,19 +1,18 @@
 package web.app.chat.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import web.app.chat.entity.Message;
 import web.app.chat.entity.User;
 import web.app.chat.repository.MessagesRepository;
-import web.app.chat.repository.UsersRepository;
 import web.app.chat.service.MessageService;
 import web.app.chat.service.UserService;
 
-import javax.persistence.metamodel.StaticMetamodel;
 import java.util.List;
 import java.util.Map;
 
@@ -40,23 +39,22 @@ public class MainController {
 
     @GetMapping("/chat")
     public String main(Map<String, Object> model){
-
-        Iterable<Message> messages = messagesRepository.findAll();
+        Iterable<Message> messages = messageService.findAll();
         model.put("messages", messages);
 
         return "chat";
     }
 
-    @PostMapping("/say")
+    @PostMapping("/chat")
     public String say(@AuthenticationPrincipal User user,
                                       @RequestParam String message,
                                       Map<String, Object> model) {
 
         Message msg = new Message(message, user);
 
-        messagesRepository.save(msg);
+        messageService.createMessage(user, message);
 
-        Iterable<Message> messages = messagesRepository.findAll();
+        Iterable<Message> messages = messageService.findAll();
 
         model.put("messages", messages);
 

@@ -3,6 +3,7 @@ package web.app.chat.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import web.app.chat.entity.Message;
+import web.app.chat.entity.User;
 import web.app.chat.repository.MessagesRepository;
 import web.app.chat.repository.UsersRepository;
 
@@ -22,6 +23,14 @@ public class MessageService {
 
     public List<Message> findAll() {
         return messagesRepository.findAll();
+    }
+
+    public void createMessage(User user, String message) {
+        Message msg = new Message(message, user);
+
+        messagesRepository.save(msg);
+
+
     }
 
 }

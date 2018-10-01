@@ -3,7 +3,6 @@ package web.app.chat.entity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.joda.time.LocalTime;
 
 import javax.persistence.*;
 
@@ -31,13 +30,5 @@ public class Message {
     public Message(String message, User user) {
         this.username = user;
         this.message = message;
-    }
-
-    @Override
-    public String toString() {
-
-        LocalTime localTime = new LocalTime();
-
-        return username + message + '\'' + " time='" + localTime.toString("hh:mm:ss");
     }
 }

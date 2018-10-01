@@ -1,5 +1,6 @@
 package web.app.chat.controller;
 
+import org.joda.time.LocalTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -48,11 +49,10 @@ public class MainController {
     @PostMapping("/chat")
     public String say(@AuthenticationPrincipal User user,
                                       @RequestParam String message,
+                                      LocalTime localTime,
                                       Map<String, Object> model) {
 
-        Message msg = new Message(message, user);
-
-        messageService.createMessage(user, message);
+        messageService.createMessage(user, message, localTime.toString("hh:mm:ss"));
 
         Iterable<Message> messages = messageService.findAll();
 

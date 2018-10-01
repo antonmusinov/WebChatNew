@@ -24,6 +24,8 @@
                             <tr th:each="m : ${messages}">
                                 <td th:utext="${m.username}"></td>
                                 <td th:utext="${m.message}"></td>
+                                <td>time:</td>
+                                <td th:utext="${m.time}"></td>
                             </tr>
                         </table>
                     </div>

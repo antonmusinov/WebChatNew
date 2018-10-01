@@ -1,5 +1,6 @@
 package web.app.chat.service;
 
+import org.joda.time.LocalTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import web.app.chat.entity.Message;
@@ -13,24 +14,22 @@ import java.util.List;
 public class MessageService {
 
     private final MessagesRepository messagesRepository;
-    private final UsersRepository usersRepository;
 
     @Autowired
-    public MessageService(MessagesRepository messagesRepository, UsersRepository usersRepository) {
+    public MessageService(MessagesRepository messagesRepository) {
         this.messagesRepository = messagesRepository;
-        this.usersRepository = usersRepository;
     }
 
     public List<Message> findAll() {
         return messagesRepository.findAll();
     }
 
-    public void createMessage(User user, String message) {
+    public void createMessage(User user, String message, String time) {
+        LocalTime localTime = new LocalTime();
         Message msg = new Message(message, user);
+        msg.setTime(localTime.toString("hh:mm:ss"));
 
         messagesRepository.save(msg);
-
-
     }
 
 }

@@ -20,14 +20,13 @@
             <div id="chat-page" class="hidden">
                 <div class="chat-container">
                     <div id="msgArea">
-                        <table>
-                            <tr th:each="m : ${messages}">
-                                <td th:utext="${m.username}"></td>
-                                <td th:utext="${m.message}"></td>
-                                <td>time:</td>
-                                <td th:utext="${m.time}"></td>
-                            </tr>
-                        </table>
+                        <ul th:each="m : ${messages}">
+                            <li>
+                                <span th:utext="${m.time}"></span>
+                                <span th:utext="${m.username}"></span>
+                                <span th:utext="${m.message}"></span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>

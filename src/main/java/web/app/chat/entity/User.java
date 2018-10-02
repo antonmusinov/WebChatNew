@@ -2,7 +2,6 @@ package web.app.chat.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,8 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Set;
-
-import static web.app.chat.constant.Const.USER_SAYS;
 
 @Entity
 @Table(name = "usr")
@@ -59,6 +56,6 @@ public class User implements UserDetails {
 
     @Override
     public String toString() {
-        return username + USER_SAYS;
+        return username + " ";
     }
 }

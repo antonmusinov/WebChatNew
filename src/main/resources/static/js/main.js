@@ -82,5 +82,6 @@ function clearFormMsg() {
 //clearFormMsg();
 loadHistory();
 //online();
+loadMessageHistory
 setInterval(loadHistory, 10000);
 setInterval(online, 10000);*/

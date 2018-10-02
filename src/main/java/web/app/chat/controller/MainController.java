@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import web.app.chat.entity.Message;
 import web.app.chat.entity.User;
-import web.app.chat.repository.MessagesRepository;
 import web.app.chat.service.MessageService;
 import web.app.chat.service.UserService;
 
@@ -22,15 +21,12 @@ public class MainController {
 
     private final UserService userService;
     private final MessageService messageService;
-    private final MessagesRepository messagesRepository;
 
     @Autowired
-    public MainController(UserService userService,
-                          MessageService messageService,
-                          MessagesRepository messagesRepository) {
+    public MainController(final UserService userService,
+                          final MessageService messageService) {
         this.userService = userService;
         this.messageService = messageService;
-        this.messagesRepository = messagesRepository;
     }
 
     @GetMapping("/")
@@ -39,7 +35,7 @@ public class MainController {
     }
 
     @GetMapping("/chat")
-    public String main(Map<String, Object> model){
+    public String main(final Map<String, Object> model){
         Iterable<Message> messages = messageService.findAll();
         model.put("messages", messages);
 

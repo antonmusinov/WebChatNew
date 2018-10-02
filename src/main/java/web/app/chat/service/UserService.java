@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import web.app.chat.entity.Role;
 import web.app.chat.entity.User;
@@ -16,12 +17,14 @@ import java.util.List;
 public class UserService implements UserDetailsService {
 
     private final UsersRepository usersRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserService(UsersRepository usersRepository)
+    public UserService(UsersRepository usersRepository, BCryptPasswordEncoder bCryptPasswordEncoder)
                        {
         this.usersRepository = usersRepository;
-    }
+                           this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+                       }
 
     public List<User> findAll() {
         return usersRepository.findAll();
@@ -32,16 +35,15 @@ public class UserService implements UserDetailsService {
         return usersRepository.findByUsername(username);
     }
 
-    public User findByUsername(User user) {
+    public User findByUsername(final User user) {
         return usersRepository.findByUsername(user.getUsername());
     }
 
-    public void saveUser(User user) {
-
+    public void saveUser(final User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
         usersRepository.save(user);
-
     }
 
 }

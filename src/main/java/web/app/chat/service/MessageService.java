@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import web.app.chat.entity.Message;
 import web.app.chat.entity.User;
 import web.app.chat.repository.MessagesRepository;
-import web.app.chat.repository.UsersRepository;
 
 import java.util.List;
 

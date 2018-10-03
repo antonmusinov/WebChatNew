@@ -1,5 +1,6 @@
 package web.app.chat.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.joda.time.LocalTime;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
@@ -13,8 +14,12 @@ import java.util.List;
 
 import static web.app.chat.constant.Const.LINK;
 
+@Slf4j
 @Service
 public class MessageService {
+
+    private int antiSpamCount = 0;
+    private String lastMessage = "";
 
     private final MessagesRepository messagesRepository;
 
@@ -29,6 +34,10 @@ public class MessageService {
 
     public void createMessage(User user, String message) {
         LocalTime localTime = new LocalTime();
+
+        if (antiSpam(message, user)){
+            log.info(user + "is spamming");
+        }
 
         if (message.trim().startsWith(LINK)) {
             String unsafe = "<a href=\"" + message + "\">" + message + "</a>";
@@ -46,6 +55,21 @@ public class MessageService {
         return  Jsoup.clean(msg, Whitelist.basic());
     }
 
+    private boolean antiSpam(String msg, User user) {
 
+        if (msg.equals(lastMessage)) {
+            antiSpamCount++;
+        } else {
+            lastMessage = msg;
+            antiSpamCount = 0;
+        }
+        if (antiSpamCount >= 3) {
+            log.info("User " + user + " is spamming");
+            antiSpamCount = 0;
+            lastMessage = "";
+            return true;
+        }
+        return false;
+    }
 
 }

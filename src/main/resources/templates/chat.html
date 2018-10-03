@@ -14,6 +14,11 @@
         <aside >
             <h1>Users online</h1>
             <div id="users">
+                <ul th:each="u : ${users}">
+                    <li th:utext="${u.username}">
+
+                    </li>
+                </ul>
             </div>
         </aside>
         <main>

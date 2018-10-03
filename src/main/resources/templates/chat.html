@@ -20,10 +20,10 @@
             <div id="chat-page" class="hidden">
                 <div class="chat-container">
                     <div id="msgArea">
-                        <ul th:each="m : ${messages}">
+                        <ul th:each="m : ${messages}" id="msg">
                             <li>
-                                <span th:utext="${m.time}"></span>
-                                <span th:utext="${m.username}"></span>
+                                <span th:utext="${m.time}" class="spanTime"></span>
+                                <span th:utext="${m.username}" class="spanUsername"></span>
                                 <span th:utext="${m.message}"></span>
                             </li>
                         </ul>

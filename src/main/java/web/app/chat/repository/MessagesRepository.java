@@ -6,5 +6,4 @@ import web.app.chat.entity.Message;
 
 @Repository
 public interface MessagesRepository extends JpaRepository<Message, Long> {
-
 }

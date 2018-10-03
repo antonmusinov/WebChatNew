@@ -20,13 +20,13 @@ var port = 8080;
 /*function loadHistory() {
     var setting = {
         "crossDomain" : true,
-        "url" : host + port + "/allMessages",
+        "url" : host + port + "/chat",
         "method" : "GET"
     };
 
     $.ajax(setting).done(function (response) {
-        $("#msgArea").html(response.replace(/\n/g, "<br />", "<hr />"))
-        $("#msgArea").scrollTop($("#msgArea")[0].scrollHeight);
+        $("#msg").html(response.replace(/\n/g, "<br />", "<hr />"))
+        $("#msg").scrollTop($("#msg")[0].scrollHeight);
     }).fail(function (jqXHR, textStatus) {
         console.log(jqXHR.status + " " + jqXHR.statusText + ". " + jqXHR.responseText);
     });
@@ -34,25 +34,24 @@ var port = 8080;
 
 /*function say() {
     var msg = $('#messageForm').serialize();
-    var name = $('#nameForm').serialize();
+    //var name = $('#nameForm').serialize();
 
     var setting = {
         "method" : "POST",
         "crossDomain" : true,
-        "url" : host + port + "/say",
-        "data" : name + "&" + msg
+        "url" : host + port + "/chat",
+        "data" : msg
     };
 
-    clearFormMsg();
+    //clearFormMsg();
     $.ajax(setting).done(function (response) {
         loadHistory();
-        online();
+        //online();
     }).fail(function (jqXHR, textStatus) {
         console.log(jqXHR.status + " " + jqXHR.statusText + ". " + jqXHR.responseText);
     });
 }*/
-/*
-function clearFormMsg() {
+/*function clearFormMsg() {
     $('#messageForm').submit(function () {
         var form = this;
         form.reset();
@@ -78,10 +77,9 @@ function clearFormMsg() {
     });
 }*/
 
-/*
 //clearFormMsg();
 loadHistory();
 //online();
-loadMessageHistory
+//loadMessageHistory
 setInterval(loadHistory, 10000);
-setInterval(online, 10000);*/
+//setInterval(online, 10000);
